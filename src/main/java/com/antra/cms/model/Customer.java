@@ -1,10 +1,18 @@
 // #5 Class for Customer service
 package com.antra.cms.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Customer {
+
+    // prevent leaking private variable to public by using @JsonProperty
+    @JsonProperty("id")
     private int customerId;
+    @JsonProperty("firstName")
     private String customerFirstName;
+    @JsonProperty("lastName")
     private String customerLastName;
+    @JsonProperty("email")
     private String customerEmail;
 
     public int getCustomerId() {
