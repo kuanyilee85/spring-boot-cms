@@ -38,11 +38,12 @@ public class CustomerService {
 
     // Read specific customer; GET /customers/id
     public Customer getCustomer(int customerId){
-        return customerList
-                .stream()
-                .filter(c->c.getCustomerId() == customerId)
-                .findFirst()
-                .get();
+//        return customerList
+//                .stream()
+//                .filter(c->c.getCustomerId() == customerId)
+//                .findFirst()
+//                .get();
+        return customerDAO.findById(customerId).get();
     }
 
     // Update; PUT /customers/id
@@ -66,12 +67,13 @@ public class CustomerService {
 
     // Delete; DELETE /customers/id
     public void deleteCustomer(int customerId){
-        customerList
-                .stream()
-                .forEach(c -> {
-                    if(c.getCustomerId() == customerId){
-                        customerList.remove(c);
-                    }
-                });
+//        customerList
+//                .stream()
+//                .forEach(c -> {
+//                    if(c.getCustomerId() == customerId){
+//                        customerList.remove(c);
+//                    }
+//                });
+        customerDAO.deleteById(customerId);
     }
 }
