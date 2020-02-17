@@ -2,11 +2,13 @@
 package com.antra.cms.service;
 
 import com.antra.cms.dao.CustomerDAO;
+import com.antra.cms.exception.CustomerNotFoundException;
 import com.antra.cms.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 // use @Component to bind service layer (CustomerService) and api (CustomerResource)
 @Component
@@ -28,7 +30,12 @@ public class CustomerService {
 
     // Read specific customer; GET /customers/id
     public Customer getCustomer(int customerId){
-        return customerDAO.findById(customerId).get();
+
+        Optional<Customer> optionalCustomer = customerDAO.findById(customerId);
+
+        if(!optionalCustomer.isPresent())
+            throw new CustomerNotFoundException("Customer Record is not available...");
+        return optionalCustomer.get();
     }
 
     // Update; PUT /customers/id
