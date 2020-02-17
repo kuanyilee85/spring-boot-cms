@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 // use @Component to bind service layer (CustomerService) and api (CustomerResource)
 @Component
@@ -17,66 +16,28 @@ public class CustomerService {
     @Autowired
     private CustomerDAO customerDAO;
 
-    private int customerIdCount = 1;
-    private List<Customer> customerList = new CopyOnWriteArrayList<>();
-
     // Create; POST /customers
     public Customer addCustomer(Customer customer){
-//        customer.setCustomerId(customerIdCount);
-//        customerList.add(customer);
-//        customerIdCount++;
         return customerDAO.save(customer);
-//        return customer;
     }
 
     // Read whole list of customer; GET /customers
     public List<Customer> getCustomer(){
-
         return customerDAO.findAll();
-//        return customerList;
     }
 
     // Read specific customer; GET /customers/id
     public Customer getCustomer(int customerId){
-//        return customerList
-//                .stream()
-//                .filter(c->c.getCustomerId() == customerId)
-//                .findFirst()
-//                .get();
         return customerDAO.findById(customerId).get();
     }
 
     // Update; PUT /customers/id
     public Customer updateCustomer(int customerId, Customer customer){
-
-        customer.setCustomerId(customerId);
-//        customerList
-//                .stream()
-//                .forEach(c -> {
-//                    if(c.getCustomerId() == customerId){
-//                        c.setCustomerFirstName(customer.getCustomerFirstName());
-//                        c.setCustomerLastName(customer.getCustomerLastName());
-//                        c.setCustomerEmail(customer.getCustomerEmail());
-//                    }
-//                });
-//        return customerList
-//                .stream()
-//                .filter(c -> c.getCustomerId() == customerId)
-//                .findFirst()
-//                .get();
-
         return customerDAO.save(customer);
     }
 
     // Delete; DELETE /customers/id
     public void deleteCustomer(int customerId){
-//        customerList
-//                .stream()
-//                .forEach(c -> {
-//                    if(c.getCustomerId() == customerId){
-//                        customerList.remove(c);
-//                    }
-//                });
         customerDAO.deleteById(customerId);
     }
 }
