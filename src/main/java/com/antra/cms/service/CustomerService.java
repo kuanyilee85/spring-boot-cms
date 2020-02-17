@@ -1,7 +1,9 @@
 // #6 Service Layer for CRUD
 package com.antra.cms.service;
 
+import com.antra.cms.dao.CustomerDAO;
 import com.antra.cms.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,20 +13,27 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class CustomerService {
 
+    // tell spring boot, I want to use CustomerDAO
+    @Autowired
+    private CustomerDAO customerDAO;
+
     private int customerIdCount = 1;
     private List<Customer> customerList = new CopyOnWriteArrayList<>();
 
     // Create; POST /customers
     public Customer addCustomer(Customer customer){
-        customer.setCustomerId(customerIdCount);
-        customerList.add(customer);
-        customerIdCount++;
-        return customer;
+//        customer.setCustomerId(customerIdCount);
+//        customerList.add(customer);
+//        customerIdCount++;
+        return customerDAO.save(customer);
+//        return customer;
     }
 
     // Read whole list of customer; GET /customers
     public List<Customer> getCustomer(){
-        return customerList;
+
+        return customerDAO.findAll();
+//        return customerList;
     }
 
     // Read specific customer; GET /customers/id
